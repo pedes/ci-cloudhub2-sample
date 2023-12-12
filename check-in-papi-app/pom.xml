@@ -26,7 +26,7 @@
 	<!-- Maven GAV Coordinates -->
 	<groupId>4d8ac554-a4c8-45a0-9961-9b8681a29be5</groupId>
 	<artifactId>check-in-papi-app</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<!-- convention = SEMANTIC VERSIONING -->
 	<packaging>mule-application</packaging>
 	<name>check-in-papi-app</name>
