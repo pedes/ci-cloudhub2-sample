@@ -1,0 +1,5 @@
+# API related properties
+#equivalente a api.version v1
+api:
+#  version: "${apiversion}"
+  id: "19170213"

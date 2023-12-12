@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<!-- students: replace with your AP org ID -->
+		<groupId>4d8ac554-a4c8-45a0-9961-9b8681a29be5</groupId>
+		<artifactId>solutions-bom</artifactId>
+		<version>1.0.0</version>
+		<!-- 1st form, set a relative path -->
+		<relativePath>../bom/pom.xml</relativePath>
+
+		<!-- 2nd form, short form for relativePath tag -->
+		<!-- parent pom must be previously installed .m2 -->
+		<!-- <relativePath/> -->
+
+		<!-- 3rd form NO relative path -->
+		<!-- maven settings.xml -->
+		<!-- resolve maven parent pom from remote repository -->
+	</parent>
+
+	<!-- Maven Coordinates -->
+	<!-- groupId = must be your ORG ID -->
+	<!-- Maven GAV Coordinates -->
+	<groupId>4d8ac554-a4c8-45a0-9961-9b8681a29be5</groupId>
+	<artifactId>check-in-papi-app</artifactId>
+	<version>1.0.0</version>
+	<!-- convention = SEMANTIC VERSIONING -->
+	<packaging>mule-application</packaging>
+	<name>check-in-papi-app</name>
+
+	<properties>
+		<!-- overrides property from parent -->
+		<app.runtime>4.4.0-20230918</app.runtime>
+		<apiversion>v1</apiversion>
+	</properties>
+
+	<!-- plugins give additional powers to maven -->
+	<build>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<!-- and must exclude some file types from filtering in maven-resources-plugin 
+					config below -->
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+				<!-- and must exclude some file types from filtering in maven-resources-plugin 
+					config below -->
+			</testResource>
+		</testResources>
+
+		<plugins>
+			<!-- plugin defined at BOM/pom.xml -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<!-- NEVER DELETE this property, extensions on MMP -->
+				<extensions>true</extensions>
+			</plugin>
+			<!-- resources plugin, replaces maven properties in properties files -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<nonFilteredFileExtensions>
+						<!-- exclude all binary files from filtering! -->
+						<nonFilteredFileExtension>p12</nonFilteredFileExtension>
+						<nonFilteredFileExtension>jar</nonFilteredFileExtension>
+						<nonFilteredFileExtension>zip</nonFilteredFileExtension>
+						<nonFilteredFileExtension>jks</nonFilteredFileExtension>
+						<nonFilteredFileExtension>crt</nonFilteredFileExtension>
+						<nonFilteredFileExtension>pem</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-http-connector</artifactId>
+			<!-- classifier mule-plugin means a mule library -->
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-sockets-connector</artifactId>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<!-- API Spec, is NOT present in the parent pom, we need ALL coordinates -->
+		<dependency>
+			<groupId>4d8ac554-a4c8-45a0-9961-9b8681a29be5</groupId>
+			<artifactId>check-in-papi</artifactId>
+			<version>1.0.0</version>
+			<classifier>oas</classifier>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.modules</groupId>
+			<artifactId>mule-apikit-module</artifactId>
+			<version>1.9.1</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+	</dependencies>
+
+	<!-- NO Repositories added, are inherited from parent-pom OR bom -->
+
+</project>
