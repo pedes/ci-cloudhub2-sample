@@ -68,6 +68,50 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<!-- NEVER DELETE this property, extensions on MMP -->
 				<extensions>true</extensions>
+				<configuration>
+					<cloudhub2Deployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<businessGroupId>${project.groupId}</businessGroupId>
+						<!-- CAREFUL Environment is case sensitive -->
+						<environment>${environment}</environment>
+						<!-- Target=region, US, London, Frankfurt -->
+						<target>Cloudhub-US-East-2</target>
+						<provider>MC</provider>
+						<muleVersion>4.4.0</muleVersion>
+						<!-- reads credentials from settings.xml -->
+						<!-- server matches ID server in settings xml -->
+						<server>cloudhub-deploy</server>
+						<applicationName>${appl.name}-${environment}</applicationName>
+						<replicas>1</replicas>
+						<vCores>0.1</vCores>
+						<!-- 4 mins deployment timeout -->
+						<deploymentTimeout>240000</deploymentTimeout>
+						<!-- Properties clientid, clientsecret, API Manager credentials -->
+						<properties>
+							<anypoint.platform.gatekeeper>disabled</anypoint.platform.gatekeeper>
+						</properties>
+						<!-- secureProperties are hidden and stored encrypted in the Runtime 
+							Manager -->
+						<secureProperties>
+							<encrypt.key>${encrypt.key}</encrypt.key>
+						</secureProperties>
+						<deploymentSettings>
+							<http>
+								<inbound>
+									<!-- true, because the HTTP Listener uses TLS/HTTPS -->
+									<lastMileSecurity>true</lastMileSecurity>
+								</inbound>
+							</http>
+						</deploymentSettings>
+						<integrations>
+							<services>
+								<objectStoreV2>
+									<enabled>true</enabled>
+								</objectStoreV2>
+							</services>
+						</integrations>
+					</cloudhub2Deployment>
+				</configuration>
 			</plugin>
 			<!-- resources plugin, replaces maven properties in properties files -->
 			<plugin>
